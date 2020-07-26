@@ -6,42 +6,11 @@ import './post-list-item.css';
 // импортируем класс компонента с динамикой
 export default class PostListItem extends Component
 {
-    constructor(props)
-    {
-        super(props);
-        // встроенное динамически меняющиеся свойство
-        this.state = {
-            important: false,
-            like: false
-        };
-        // привязываем вызов к контенсту this
-        this.onImportant = this.onImportant.bind(this);
-        // привязываем вызов к контенсту this
-        this.onLike = this.onLike.bind(this);
-    }
-
-    // обработчик события клик
-    onImportant()
-    {
-        this.setState(({important}) => ({
-            important: !important
-        }));
-    }
-
-    // обработчик события клик
-    onLike()
-    {
-        this.setState(({like}) => ({
-            like: !like
-        }));
-    }
 
     render()
     {
         // вытаскиваю данные из пропса
-        const {label} = this.props;
-        // вытаскиваем из state
-        const {important, like} = this.state;
+        const {label, onDelete, important, like, onToggleImportant, onToggleLiked} = this.props;
         // перемнная классов элемента ли
         let classNames ='app-list-item d-flex justify-content-between';
         //
@@ -59,7 +28,7 @@ export default class PostListItem extends Component
             <div className={classNames}>
                 <span 
                 className="app-list-item-label"
-                onClick={this.onLike}
+                onClick={onToggleLiked}
                 >
                     {label}
                 </span>
@@ -67,13 +36,15 @@ export default class PostListItem extends Component
                     <button 
                     type="button" 
                     className="btn-star btn-sm"
-                    onClick={this.onImportant}
+                    onClick={onToggleImportant}
                     >
                         <i className="fa fa-star"></i>
                     </button>
                     <button 
                     type="button" 
-                    className="btn-trash btn-sm">
+                    className="btn-trash btn-sm"
+                    onClick={onDelete}
+                    >
                         <i className="fa fa-trash-o"></i>
                     </button>
                     <i className="fa fa-heart"></i>

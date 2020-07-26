@@ -4,7 +4,8 @@ import PostListItem from '../post-list-item';
 // сцц стили
 import './post-list.css';
 
-const PostList = ({posts}) => {
+//принимаем props
+const PostList = ({posts, onDelete, onToggleImportant, onToggleLiked}) => {
     // проверка на пустые свойства обьект 
     const post = posts.filter(value => {
         if(value !== "" && typeof value === 'object' && typeof value === 'string')
@@ -18,9 +19,14 @@ const PostList = ({posts}) => {
         //  вытаскием отдельно id и item
         const {id, ...itemProps} = item;
 
+        //выводим жлемент ли
         return (
             <li key={id} className="list-group-item">
-                <PostListItem {...itemProps}/>
+                <PostListItem {...itemProps}
+                onDelete={() => onDelete(id)}
+                onToggleImportant={() => onToggleImportant(id)}
+                onToggleLiked={() => onToggleLiked(id)}
+                />
             </li>
         )
     })
